@@ -12,4 +12,9 @@ class Group extends Model
         'start_from',
         'is_active'
     ];
+
+    public function students()
+    {
+        return $this->hasMany(Student::class, 'group_id', 'id');
+    }
 }

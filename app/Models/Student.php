@@ -13,4 +13,9 @@ class Student extends Model
         'surname',
         'group_id',
     ];
+
+    public function group()
+    {
+        return $this->hasOne(Group::class, 'id', 'group_id');
+    }
 }
