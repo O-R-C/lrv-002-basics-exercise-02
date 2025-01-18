@@ -12,7 +12,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        $groups = Group::all();
+        return view('groups.index', compact('groups'));
     }
 
     /**
@@ -20,7 +21,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('groups.create');
     }
 
     /**
@@ -28,7 +29,18 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|max:255',
+            'start_from' => 'required|max:255',
+        ]);
+
+        $group = new Group();
+        $group->title = $request->input('title');
+        $group->start_from = $request->input('start_from');
+        $group->is_active = $request->input('is_active') ? true : false;
+        $group->save();
+
+        return redirect()->route('groups.index');
     }
 
     /**
@@ -36,7 +48,8 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        //
+        // dd($group);
+        return view('groups.show', compact('group'));
     }
 
     /**
@@ -60,6 +73,11 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        // dd($group->id);
+        $group = Group::find($group->id);
+        if ($group) {
+            $group->delete();
+        }
+        return redirect()->route('groups.index');
     }
 }
