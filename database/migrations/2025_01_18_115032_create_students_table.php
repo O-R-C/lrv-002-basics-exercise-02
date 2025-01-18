@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->decimal('group_id');
+            $table->string('name');
+            $table->string('surname');
             $table->timestamps();
         });
     }
